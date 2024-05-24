@@ -19,7 +19,14 @@ const getAllRecipeFromDB = async (query: Record<string, unknown>) => {
   return result
 }
 
+// Get recipe by id from the database
+const getRecipeByIdFromDB = async (id: string) => {
+  const result = await Recipe.findById(id)
+  return result
+}
+
 export const RecipeService = {
   createRecipeIntoDB,
   getAllRecipeFromDB,
+  getRecipeByIdFromDB,
 }
