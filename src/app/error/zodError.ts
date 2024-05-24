@@ -3,7 +3,6 @@ import { TErrorMessage, TErrorResponse } from '../interface/error'
 
 export const handleZodValidationError = (error: ZodError): TErrorResponse => {
   const statusCode = 400
-  // const message = 'Validation Error'
 
   const capitalizeFirstLetter = (str: string) => {
     return str.replace(/\b\w/g, (char) => char.toUpperCase())
@@ -19,7 +18,7 @@ export const handleZodValidationError = (error: ZodError): TErrorResponse => {
 
   const errorMessage = errorMessages
     .map((error) => `${error.path} ${error.message}`)
-    .join('. ')
+    .join(', ')
 
   return {
     statusCode,
