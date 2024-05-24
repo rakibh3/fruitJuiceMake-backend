@@ -8,7 +8,12 @@ export const recipeValidationSchema = z.object({
     })
     .min(3)
     .max(50),
-  image: z.string().url(),
+  image: z
+    .string({
+      required_error: 'Image URL is required',
+      invalid_type_error: 'Image URL must be a string',
+    })
+    .url(),
   details: z
     .string({
       required_error: 'Details is required',

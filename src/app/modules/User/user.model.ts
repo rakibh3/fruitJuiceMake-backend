@@ -5,7 +5,7 @@ const userSchema = new Schema<TUser>({
   displayName: { type: String, required: true },
   photoURL: { type: String, required: true },
   email: { type: String, required: true, unique: true },
-  coin: { type: Number, required: true },
+  coin: { type: Number, required: true, default: 50 },
 })
 
 export const User = model<TUser>('User', userSchema)
