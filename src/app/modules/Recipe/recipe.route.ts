@@ -2,11 +2,13 @@ import express from 'express'
 import { RecipeController } from './recipe.controller'
 import { validateRequest } from '../../middlewares/validateRequest'
 import { recipeValidationSchema } from './recipe.validation'
+import auth from '../../middlewares/auth'
 
 const router = express.Router()
 
 router.post(
   '/recipes',
+  auth(),
   validateRequest(recipeValidationSchema),
   RecipeController.createRecipe,
 )
