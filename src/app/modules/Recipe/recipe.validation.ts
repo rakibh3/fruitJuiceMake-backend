@@ -6,8 +6,8 @@ export const recipeValidationSchema = z.object({
       required_error: 'Name is required',
       invalid_type_error: 'Name must be a string',
     })
-    .min(3)
-    .max(50),
+    .min(1)
+    .max(100),
   image: z
     .string({
       required_error: 'Image URL is required',
@@ -19,28 +19,28 @@ export const recipeValidationSchema = z.object({
       required_error: 'Details is required',
       invalid_type_error: 'Details must be a string',
     })
-    .min(10)
-    .max(500),
+    .min(1)
+    .max(1000),
   youtubeCode: z
     .string({
       required_error: 'Youtube code is required',
       invalid_type_error: 'Youtube code must be a string',
     })
-    .min(11)
+    .min(1)
     .max(11),
   country: z
     .string({
       required_error: 'Country is required',
       invalid_type_error: 'Country must be a string',
     })
-    .min(2)
+    .min(1)
     .max(50),
   category: z
     .string({
       required_error: 'Category is required',
       invalid_type_error: 'Category must be a string',
     })
-    .min(2)
+    .min(1)
     .max(50),
   creatorEmail: z
     .string({

@@ -16,7 +16,6 @@ const userLoginIntoBD = async (payLoad: TUser) => {
   const jwtPayload = {
     id: user._id,
     email: user.email,
-    displayName: user.displayName,
   }
 
   // Generate JWT Token
@@ -29,15 +28,29 @@ const userLoginIntoBD = async (payLoad: TUser) => {
   const userData = {
     _id: user._id,
     displayName: user.displayName,
-    email: user.email,
     photoURL: user.photoURL,
+    email: user.email,
     coin: user.coin,
-    accessToken,
+    token: accessToken,
   }
 
   return userData
 }
 
+// Get user details from DB
+const getUserDetailsFromDB = async (id: string) => {
+  const result = await User.findOne({ _id: id })
+  return result
+}
+
+// Get total users from DB
+const getTotalUsersFromDB = async () => {
+  const result = await User.find().countDocuments()
+  return result
+}
+
 export const UserService = {
   userLoginIntoBD,
+  getUserDetailsFromDB,
+  getTotalUsersFromDB,
 }

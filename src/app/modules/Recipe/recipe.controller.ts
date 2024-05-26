@@ -36,8 +36,20 @@ const getRecipeById = catchAsync(async (req, res) => {
   })
 })
 
+// Get total recipes
+const getTotalRecipes = catchAsync(async (req, res) => {
+  const result = await RecipeService.getTotalRecipesFromDB()
+  sendResponse(res, {
+    statusCode: 200,
+    message: 'Total recipes fetched successfully',
+    success: true,
+    data: result,
+  })
+})
+
 export const RecipeController = {
   createRecipe,
   getAllRecipe,
   getRecipeById,
+  getTotalRecipes,
 }

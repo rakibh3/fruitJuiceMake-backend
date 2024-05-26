@@ -43,8 +43,15 @@ const getRecipeByIdFromDB = async (id: string) => {
   return result
 }
 
+// Get total recipes from the database
+const getTotalRecipesFromDB = async () => {
+  const result = await Recipe.countDocuments()
+  return result
+}
+
 export const RecipeService = {
   createRecipeIntoDB,
   getAllRecipeFromDB,
   getRecipeByIdFromDB,
+  getTotalRecipesFromDB,
 }

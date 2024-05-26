@@ -13,6 +13,8 @@ router.post(
   RecipeController.createRecipe,
 )
 
+router.get('/total-recipes', RecipeController.getTotalRecipes)
+
 router.get('/recipes', RecipeController.getAllRecipe)
 
 router.get('/recipes/:id', RecipeController.getRecipeById)
