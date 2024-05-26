@@ -65,10 +65,25 @@ const addUserToPurchasedByArray = catchAsync(async (req, res) => {
   })
 })
 
+// Increase watch count
+const increaseWatchCount = catchAsync(async (req, res) => {
+  const { recipeId } = req.body
+
+  const result = await RecipeService.increaseWatchCountInDB(recipeId)
+
+  sendResponse(res, {
+    statusCode: 200,
+    message: 'Watch count increased successfully',
+    success: true,
+    data: result,
+  })
+})
+
 export const RecipeController = {
   createRecipe,
   getAllRecipe,
   getRecipeById,
   getTotalRecipes,
   addUserToPurchasedByArray,
+  increaseWatchCount,
 }

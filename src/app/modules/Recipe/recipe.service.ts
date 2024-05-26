@@ -62,10 +62,21 @@ const addUserToPurchasedByArrayInDB = async (
   return result
 }
 
+// Increase watch count in the database
+const increaseWatchCountInDB = async (recipeId: string) => {
+  const result = await Recipe.findOneAndUpdate(
+    { _id: recipeId },
+    { $inc: { watchCount: 1 } },
+    { new: true },
+  )
+  return result
+}
+
 export const RecipeService = {
   createRecipeIntoDB,
   getAllRecipeFromDB,
   getRecipeByIdFromDB,
   getTotalRecipesFromDB,
   addUserToPurchasedByArrayInDB,
+  increaseWatchCountInDB,
 }

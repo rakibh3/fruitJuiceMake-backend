@@ -25,4 +25,10 @@ router.patch(
   RecipeController.addUserToPurchasedByArray,
 )
 
+router.patch(
+  '/increase-watch-count',
+  auth(),
+  RecipeController.increaseWatchCount,
+)
+
 export const RecipeRouter = router
