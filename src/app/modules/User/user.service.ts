@@ -59,9 +59,26 @@ const updateUserCoinsInDB = async (id: string, reduceAmount: number) => {
   return result
 }
 
+// Increase coin for creator of the recipe
+const increaseCreatorCoinInDB = async (email: string) => {
+  const result = await User.findOneAndUpdate(
+    {
+      email,
+    },
+    {
+      $inc: { coin: 1 },
+    },
+    {
+      new: true,
+    },
+  )
+  return result
+}
+
 export const UserService = {
   userLoginIntoBD,
   getUserDetailsFromDB,
   getTotalUsersFromDB,
   updateUserCoinsInDB,
+  increaseCreatorCoinInDB,
 }

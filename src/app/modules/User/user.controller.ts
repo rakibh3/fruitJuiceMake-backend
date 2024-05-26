@@ -48,9 +48,22 @@ const updateUserCoins = catchAsync(async (req, res) => {
   })
 })
 
+// Increase coin for creator of the recipe
+const increaseCreatorCoin = catchAsync(async (req, res) => {
+  const { recipeCreatorEmail } = req.body
+  const result = await UserService.increaseCreatorCoinInDB(recipeCreatorEmail)
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Creator coin increased successfully',
+    data: result,
+  })
+})
+
 export const UserController = {
   userLogin,
   getUser,
   getTotalUsers,
   updateUserCoins,
+  increaseCreatorCoin,
 }

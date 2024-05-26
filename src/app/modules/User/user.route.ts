@@ -19,4 +19,11 @@ router.get('/total-users', UserController.getTotalUsers)
 // Update coin
 router.patch('/update-user-coins', auth(), UserController.updateUserCoins)
 
+// Increase coin for creator of the recipe
+router.patch(
+  '/increase-creaton-coin',
+  auth(),
+  UserController.increaseCreatorCoin,
+)
+
 export const UserRoute = router
