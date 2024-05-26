@@ -49,9 +49,23 @@ const getTotalRecipesFromDB = async () => {
   return result
 }
 
+// Add user to purchased by array in the database
+const addUserToPurchasedByArrayInDB = async (
+  email: string,
+  recipeId: string,
+) => {
+  const result = await Recipe.findOneAndUpdate(
+    { _id: recipeId },
+    { $push: { purchasedBy: email } },
+    { new: true },
+  )
+  return result
+}
+
 export const RecipeService = {
   createRecipeIntoDB,
   getAllRecipeFromDB,
   getRecipeByIdFromDB,
   getTotalRecipesFromDB,
+  addUserToPurchasedByArrayInDB,
 }

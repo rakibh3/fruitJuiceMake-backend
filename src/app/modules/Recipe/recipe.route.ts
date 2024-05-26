@@ -19,4 +19,10 @@ router.get('/recipes', RecipeController.getAllRecipe)
 
 router.get('/recipes/:id', RecipeController.getRecipeById)
 
+router.patch(
+  '/add-user-to-purchased-by-array',
+  auth(),
+  RecipeController.addUserToPurchasedByArray,
+)
+
 export const RecipeRouter = router

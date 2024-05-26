@@ -47,9 +47,28 @@ const getTotalRecipes = catchAsync(async (req, res) => {
   })
 })
 
+// Add user to purchased by array
+const addUserToPurchasedByArray = catchAsync(async (req, res) => {
+  const { email } = req.user
+  const { recipeId } = req.body
+
+  const result = await RecipeService.addUserToPurchasedByArrayInDB(
+    email,
+    recipeId,
+  )
+
+  sendResponse(res, {
+    statusCode: 200,
+    message: 'User added to purchased by array successfully',
+    success: true,
+    data: result,
+  })
+})
+
 export const RecipeController = {
   createRecipe,
   getAllRecipe,
   getRecipeById,
   getTotalRecipes,
+  addUserToPurchasedByArray,
 }
