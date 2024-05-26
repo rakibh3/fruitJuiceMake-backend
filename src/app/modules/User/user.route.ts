@@ -16,4 +16,7 @@ router.get('/user', auth(), UserController.getUser)
 
 router.get('/total-users', UserController.getTotalUsers)
 
+// Update coin
+router.patch('/update-user-coins', auth(), UserController.updateUserCoins)
+
 export const UserRoute = router

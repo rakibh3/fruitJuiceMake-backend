@@ -35,8 +35,22 @@ const getTotalUsers = catchAsync(async (req, res) => {
   })
 })
 
+// Update user coins
+const updateUserCoins = catchAsync(async (req, res) => {
+  const { id } = req.user
+  const { reduceAmount } = req.body
+  const result = await UserService.updateUserCoinsInDB(id, reduceAmount)
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'User coins updated successfully',
+    data: result,
+  })
+})
+
 export const UserController = {
   userLogin,
   getUser,
   getTotalUsers,
+  updateUserCoins,
 }

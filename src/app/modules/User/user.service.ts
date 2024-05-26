@@ -49,8 +49,19 @@ const getTotalUsersFromDB = async () => {
   return result
 }
 
+// Update user coins in DB
+const updateUserCoinsInDB = async (id: string, reduceAmount: number) => {
+  const result = await User.findOneAndUpdate(
+    { _id: id },
+    { $inc: { coin: -reduceAmount } },
+    { new: true },
+  )
+  return result
+}
+
 export const UserService = {
   userLoginIntoBD,
   getUserDetailsFromDB,
   getTotalUsersFromDB,
+  updateUserCoinsInDB,
 }
