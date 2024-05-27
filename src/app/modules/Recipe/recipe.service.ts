@@ -31,6 +31,7 @@ const getAllRecipeFromDB = async (query: Record<string, unknown>) => {
   )
     .search(recipeSearchableFields)
     .filter()
+    .paginate()
 
   const result = await recipeQuery.modelQuery
 
