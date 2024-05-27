@@ -19,6 +19,13 @@ router.get('/total-users', UserController.getTotalUsers)
 // Update coin
 router.patch('/update-user-coins', auth(), UserController.updateUserCoins)
 
+// Update user coin after purchase
+router.patch(
+  '/update-user-coins-after-purchase',
+  auth(),
+  UserController.updateUserCoinsAfterPurchase,
+)
+
 // Increase coin for creator of the recipe
 router.patch(
   '/increase-creaton-coin',

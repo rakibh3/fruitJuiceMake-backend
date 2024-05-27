@@ -48,6 +48,19 @@ const updateUserCoins = catchAsync(async (req, res) => {
   })
 })
 
+// Update user coin after purchase
+const updateUserCoinsAfterPurchase = catchAsync(async (req, res) => {
+  const { id } = req.user
+  const { amount } = req.body
+  const result = await UserService.updateUserCoinsAfterPurchaseInDB(id, amount)
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'User coins updated successfully',
+    data: result,
+  })
+})
+
 // Increase coin for creator of the recipe
 const increaseCreatorCoin = catchAsync(async (req, res) => {
   const { recipeCreatorEmail } = req.body
@@ -66,4 +79,5 @@ export const UserController = {
   getTotalUsers,
   updateUserCoins,
   increaseCreatorCoin,
+  updateUserCoinsAfterPurchase,
 }

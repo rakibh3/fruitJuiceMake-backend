@@ -59,6 +59,16 @@ const updateUserCoinsInDB = async (id: string, reduceAmount: number) => {
   return result
 }
 
+// Update user coin after purchase
+const updateUserCoinsAfterPurchaseInDB = async (id: string, amount: number) => {
+  const result = await User.findOneAndUpdate(
+    { _id: id },
+    { $inc: { coin: amount } },
+    { new: true },
+  )
+  return result
+}
+
 // Increase coin for creator of the recipe
 const increaseCreatorCoinInDB = async (email: string) => {
   const result = await User.findOneAndUpdate(
@@ -81,4 +91,5 @@ export const UserService = {
   getTotalUsersFromDB,
   updateUserCoinsInDB,
   increaseCreatorCoinInDB,
+  updateUserCoinsAfterPurchaseInDB,
 }
