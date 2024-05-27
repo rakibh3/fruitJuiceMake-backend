@@ -39,5 +39,7 @@
     "prettier": "^3.1.0",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.3.2"
-  }
+  },
+  "main": "index.js",
+  "keywords": []
 }
