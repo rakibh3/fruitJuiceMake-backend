@@ -20,6 +20,6 @@ export const createPaymentIntent = async (req: Request, res: Response) => {
     })
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error(error.message)
+    // console.error(error.message)
   }
 }
