@@ -15,4 +15,11 @@ router.post(
   CoinController.createCoin,
 )
 
+// Decrease 10 coin after view recipe - PATCH /api/coin/decrease
+router.patch(
+  '/coin/decrease',
+  auth(USER_ROLE.user),
+  CoinController.decreaseCoin,
+)
+
 export const CoinRoute = router
