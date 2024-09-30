@@ -1,11 +1,13 @@
+import httpStatus from 'http-status'
 import { catchAsync } from '../../utils/catchAsync'
 import { sendResponse } from '../../utils/sendResponse'
 import { UserService } from './user.service'
 
-const userLogin = catchAsync(async (req, res) => {
-  const result = await UserService.userLoginIntoBD(req.body)
+// Login user into system
+const loginUser = catchAsync(async (req, res) => {
+  const result = await UserService.loginUserIntoDB(req.body)
   sendResponse(res, {
-    statusCode: 201,
+    statusCode: httpStatus.CREATED,
     success: true,
     message: 'User login successfully',
     data: result,
@@ -36,7 +38,7 @@ const getTotalUsers = catchAsync(async (req, res) => {
 })
 
 export const UserController = {
-  userLogin,
+  loginUser,
   getUser,
   getTotalUsers,
 }

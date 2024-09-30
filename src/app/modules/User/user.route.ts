@@ -9,7 +9,7 @@ const router = express.Router()
 router.post(
   '/user',
   validateRequest(userValidatonSchema),
-  UserController.userLogin,
+  UserController.loginUser,
 )
 
 router.get('/user', auth(), UserController.getUser)

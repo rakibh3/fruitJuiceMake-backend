@@ -1,10 +1,22 @@
 import { Schema, model } from 'mongoose'
-import { TUser } from './user.interface'
+import { TUser, UserModel } from './user.interface'
 
-const userSchema = new Schema<TUser>({
-  displayName: { type: String, required: true },
-  photoURL: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-})
+const userSchema = new Schema<TUser, UserModel>(
+  {
+    displayName: { type: String, required: true },
+    photoURL: { type: String },
+    email: { type: String, required: true, unique: true },
+    role: { type: String, enum: ['admin', 'user'], default: 'user' },
+  },
+  {
+    timestamps: true,
+    versionKey: false,
+  },
+)
 
-export const User = model<TUser>('User', userSchema)
+// Check if the user exists
+userSchema.statics.isUserExist = async function (email: string) {
+  return await User.findOne({ email })
+}
+
+export const User = model<TUser, UserModel>('User', userSchema)

@@ -3,7 +3,8 @@ import { generateToken } from '../../helper/generateToken'
 import { TUser } from './user.interface'
 import { User } from './user.model'
 
-const userLoginIntoBD = async (payLoad: TUser) => {
+// Login user into system
+const loginUserIntoDB = async (payLoad: TUser) => {
   let user = await User.findOne({ email: payLoad.email })
 
   // If user not exist then create a new user
@@ -14,8 +15,9 @@ const userLoginIntoBD = async (payLoad: TUser) => {
 
   // Payload for jwt
   const jwtPayload = {
-    id: user._id,
-    email: user.email,
+    id: user?._id,
+    email: user?.email,
+    role: user?.role,
   }
 
   // Generate JWT Token
@@ -26,10 +28,10 @@ const userLoginIntoBD = async (payLoad: TUser) => {
   )
 
   const userData = {
-    _id: user._id,
-    displayName: user.displayName,
-    photoURL: user.photoURL,
-    email: user.email,
+    _id: user?._id,
+    displayName: user?.displayName,
+    photoURL: user?.photoURL,
+    email: user?.email,
     token: accessToken,
   }
 
@@ -49,7 +51,7 @@ const getTotalUsersFromDB = async () => {
 }
 
 export const UserService = {
-  userLoginIntoBD,
+  loginUserIntoDB,
   getUserDetailsFromDB,
   getTotalUsersFromDB,
 }
