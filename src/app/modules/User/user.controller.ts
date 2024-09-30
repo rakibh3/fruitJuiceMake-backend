@@ -19,7 +19,7 @@ const getUser = catchAsync(async (req, res) => {
   const { id } = req.user
   const result = await UserService.getUserDetailsFromDB(id)
   sendResponse(res, {
-    statusCode: 200,
+    statusCode: httpStatus.OK,
     success: true,
     message: 'User details',
     data: result,
