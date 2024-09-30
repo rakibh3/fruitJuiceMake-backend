@@ -1,4 +1,6 @@
+import { Types } from 'mongoose'
+
 export type TCoin = {
-  userEmail: string
+  userId: Types.ObjectId
   coin: number
 }

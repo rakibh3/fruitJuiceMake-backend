@@ -4,8 +4,8 @@ import { sendResponse } from '../../utils/sendResponse'
 import { CoinService } from './coin.service'
 
 const createCoin = catchAsync(async (req, res) => {
-  const { userEmail, coin } = req.body
-  const result = await CoinService.addCoinIntoDB({ userEmail, coin })
+  const { userId, coin } = req.body
+  const result = await CoinService.addCoinIntoDB({ userId, coin })
 
   sendResponse(res, {
     success: true,

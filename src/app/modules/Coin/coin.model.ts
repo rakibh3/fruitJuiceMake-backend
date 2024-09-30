@@ -1,17 +1,22 @@
 import { model, Schema } from 'mongoose'
 import { TCoin } from './coin.interface'
 
-const coinSchema = new Schema<TCoin>({
-  userEmail: {
-    type: String,
-    required: true,
-    ref: 'User',
+const coinSchema = new Schema<TCoin>(
+  {
+    userId: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: 'User',
+    },
+    coin: {
+      type: Number,
+      default: 50,
+    },
   },
-  coin: {
-    type: Number,
-    required: true,
-    default: 50,
+  {
+    timestamps: true,
+    versionKey: false,
   },
-})
+)
 
 export const Coin = model<TCoin>('Coin', coinSchema)

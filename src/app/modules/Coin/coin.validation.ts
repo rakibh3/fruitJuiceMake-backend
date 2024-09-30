@@ -1,8 +1,7 @@
 import { z } from 'zod'
 
 export const coinCreateValidationSchema = z.object({
-  userEmail: z.string().email(),
-  coin: z.number().int().positive(),
+  coin: z.number().int().positive().optional(),
 })
 
 export const coinUpdateValidationSchema = z.object({
