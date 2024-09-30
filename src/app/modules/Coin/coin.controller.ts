@@ -30,7 +30,22 @@ const decreaseCoin = catchAsync(async (req, res) => {
   })
 })
 
+// Increase 10 coin after user add new recipe
+const increaseCoin = catchAsync(async (req, res) => {
+  const { id } = req.user
+
+  const result = await CoinService.increaseCoinFromDB(id, 5)
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Coin increased successfully',
+    data: result,
+  })
+})
+
 export const CoinController = {
   createCoin,
   decreaseCoin,
+  increaseCoin,
 }

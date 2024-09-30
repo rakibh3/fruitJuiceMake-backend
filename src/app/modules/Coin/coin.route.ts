@@ -10,7 +10,6 @@ const router = express.Router()
 // Coin add route - POST /api/coin
 router.post(
   '/coin',
-  // auth(USER_ROLE.user),
   validateRequest(coinCreateValidationSchema),
   CoinController.createCoin,
 )
@@ -20,6 +19,13 @@ router.patch(
   '/coin/decrease',
   auth(USER_ROLE.user),
   CoinController.decreaseCoin,
+)
+
+// Increase 10 coin after user add new recipe - PATCH /api/coin/increase
+router.patch(
+  '/coin/increase',
+  auth(USER_ROLE.user),
+  CoinController.increaseCoin,
 )
 
 export const CoinRoute = router

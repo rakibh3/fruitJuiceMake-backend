@@ -26,7 +26,16 @@ const decreaseCoinFromDB = async (id: string, coin: number) => {
   )
 }
 
+// Increase coin after user add new recipe
+const increaseCoinFromDB = async (id: string, coin: number) => {
+  const userCoin = await Coin.findOne({ userId: id })
+  if (!userCoin) return { message: 'User not found' }
+
+  await Coin.findOneAndUpdate({ userId: id }, { $inc: { coin } }, { new: true })
+}
+
 export const CoinService = {
   addCoinIntoDB,
   decreaseCoinFromDB,
+  increaseCoinFromDB,
 }
