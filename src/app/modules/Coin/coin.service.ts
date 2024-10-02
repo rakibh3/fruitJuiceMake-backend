@@ -1,16 +1,17 @@
-import { TCoin } from './coin.interface'
 import { Coin } from './coin.model'
 import { User } from '../User/user.model'
 
 // Default coin is 50 for each user first time login to the app
-const addCoinIntoDB = async (payLoad: TCoin) => {
-  const user = await User.findOne({ _id: payLoad.userId })
-  if (!user) return null
+const addCoinIntoDB = async (id: string) => {
+  const user = await User.findOne({ _id: id })
+  if (!user) {
+    throw new Error('User not found')
+  }
 
-  const coin = await Coin.findOne({ userId: payLoad.userId })
+  const coin = await Coin.findOne({ userId: id })
   if (coin) return coin
 
-  const result = await Coin.create(payLoad)
+  const result = await Coin.create(id)
   return result
 }
 

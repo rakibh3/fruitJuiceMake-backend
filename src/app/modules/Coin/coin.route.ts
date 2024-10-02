@@ -10,6 +10,7 @@ const router = express.Router()
 // Coin add route - POST /api/coin
 router.post(
   '/coin',
+  auth(USER_ROLE.user),
   validateRequest(coinCreateValidationSchema),
   CoinController.createCoin,
 )

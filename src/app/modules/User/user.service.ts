@@ -3,9 +3,10 @@ import { generateToken } from '../../helper/generateToken'
 import { TUser } from './user.interface'
 import { User } from './user.model'
 
-// Login user into system
-const loginUserIntoDB = async (payLoad: TUser) => {
+// Create user into system
+const createUserIntoDB = async (payLoad: TUser) => {
   let user = await User.findOne({ email: payLoad.email })
+  console.log(user)
 
   // If user not exist then create a new user
   if (!user) {
@@ -51,7 +52,7 @@ const getTotalUsersFromDB = async () => {
 }
 
 export const UserService = {
-  loginUserIntoDB,
+  createUserIntoDB,
   getUserDetailsFromDB,
   getTotalUsersFromDB,
 }

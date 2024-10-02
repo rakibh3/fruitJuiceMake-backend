@@ -11,6 +11,6 @@ export const userValidatonSchema = z.object({
       invalid_type_error: 'Email must be a string',
     })
     .email(),
-  photoURL: z.string().url().optional(),
+  photoURL: z.string().url().optional().nullable(),
   role: z.enum(['admin', 'user']).default('user'),
 })

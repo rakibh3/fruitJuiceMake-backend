@@ -5,8 +5,8 @@ import { CoinService } from './coin.service'
 
 // Default 50 coin allocated to each user first time login to the app
 const createCoin = catchAsync(async (req, res) => {
-  const { userId, coin } = req.body
-  const result = await CoinService.addCoinIntoDB({ userId, coin })
+  const { id } = req.user
+  const result = await CoinService.addCoinIntoDB(id)
 
   sendResponse(res, {
     success: true,
