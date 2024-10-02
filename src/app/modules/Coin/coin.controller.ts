@@ -3,15 +3,15 @@ import { catchAsync } from '../../utils/catchAsync'
 import { sendResponse } from '../../utils/sendResponse'
 import { CoinService } from './coin.service'
 
-// Default 50 coin allocated to each user first time login to the app
-const createCoin = catchAsync(async (req, res) => {
-  const { id } = req.user
-  const result = await CoinService.addCoinIntoDB(id)
+// Get coins by userId
+const getCoins = catchAsync(async (req, res) => {
+  const { userId } = req.params
+  const result = await CoinService.getCoinsFromDB(userId)
 
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.CREATED,
-    message: 'Coin added successfully',
+    message: 'Coin retrive successfully',
     data: result,
   })
 })
@@ -45,7 +45,7 @@ const increaseCoin = catchAsync(async (req, res) => {
 })
 
 export const CoinController = {
-  createCoin,
+  getCoins,
   decreaseCoin,
   increaseCoin,
 }

@@ -7,13 +7,8 @@ import { USER_ROLE } from '../User/user.constant'
 
 const router = express.Router()
 
-// Default 50 coin route - POST /api/coin
-router.post(
-  '/coin',
-  auth(USER_ROLE.user),
-  validateRequest(coinCreateValidationSchema),
-  CoinController.createCoin,
-)
+// Get coin by userId
+router.get('/coins/:userId', auth(USER_ROLE.user), CoinController.getCoins)
 
 // Decrease 10 coin after view recipe - PATCH /api/coin/decrease
 router.patch(

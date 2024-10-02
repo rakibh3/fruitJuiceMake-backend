@@ -1,18 +1,10 @@
 import { Coin } from './coin.model'
-import { User } from '../User/user.model'
 
-// Default coin is 50 for each user first time login to the app
-const addCoinIntoDB = async (id: string) => {
-  const user = await User.findOne({ _id: id })
-  if (!user) {
-    throw new Error('User not found')
-  }
+// Get coin from DB by userId
+const getCoinsFromDB = async (userId: string) => {
+  const coins = await Coin.findOne({ userId: userId })
 
-  const coin = await Coin.findOne({ userId: id })
-  if (coin) return coin
-
-  const result = await Coin.create(id)
-  return result
+  return coins
 }
 
 // Decrease coin after view recipe
@@ -36,7 +28,7 @@ const increaseCoinFromDB = async (id: string, coin: number) => {
 }
 
 export const CoinService = {
-  addCoinIntoDB,
+  getCoinsFromDB,
   decreaseCoinFromDB,
   increaseCoinFromDB,
 }
