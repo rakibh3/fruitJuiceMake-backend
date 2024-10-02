@@ -14,6 +14,9 @@ router.post(
   UserController.registerUser,
 )
 
+// Login user
+router.post('/user/login', UserController.loginUser)
+
 // Get user route endpoints:- /user
 router.get(
   '/user',

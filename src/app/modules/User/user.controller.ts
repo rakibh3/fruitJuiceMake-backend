@@ -14,6 +14,18 @@ const registerUser = catchAsync(async (req, res) => {
   })
 })
 
+// Login user
+const loginUser = catchAsync(async (req, res) => {
+  const { email } = req.body
+  const result = await UserService.loginUserFromDB(email)
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'User login successfully',
+    data: result,
+  })
+})
+
 // Get user details
 const getUser = catchAsync(async (req, res) => {
   const { id } = req.user
@@ -39,6 +51,7 @@ const getTotalUsers = catchAsync(async (req, res) => {
 
 export const UserController = {
   registerUser,
+  loginUser,
   getUser,
   getTotalUsers,
 }

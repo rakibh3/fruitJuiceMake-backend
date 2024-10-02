@@ -9,7 +9,7 @@ const registerUserIntoDB = async (payLoad: TUser) => {
   let user = await User.findOne({ email: payLoad.email })
 
   if (user) {
-    throw new Error('User already with this email')
+    throw new Error('User already register with this email')
   }
 
   // If user not exist then create a new user
@@ -23,32 +23,39 @@ const registerUserIntoDB = async (payLoad: TUser) => {
 
     return { user, defaultCoin }
   }
+}
 
-  // const defaultCoin = await Coin.create()
+// Login user
+const loginUserFromDB = async (email: string) => {
+  const user = await User.findOne({ email })
+
+  if (!user) {
+    throw new Error('User not found')
+  }
 
   // Payload for jwt
-  // const jwtPayload = {
-  //   id: user?._id,
-  //   email: user?.email,
-  //   role: user?.role,
-  // }
+  const jwtPayload = {
+    id: user?._id,
+    email: user?.email,
+    role: user?.role,
+  }
 
-  // // Generate JWT Token
-  // const accessToken = generateToken(
-  //   jwtPayload,
-  //   config.jwt_access_secret as string,
-  //   config.jwt_access_expires_in as string,
-  // )
+  // Generate JWT Token
+  const accessToken = generateToken(
+    jwtPayload,
+    config.jwt_access_secret as string,
+    config.jwt_access_expires_in as string,
+  )
 
-  // const userData = {
-  //   _id: user?._id,
-  //   displayName: user?.displayName,
-  //   photoURL: user?.photoURL,
-  //   email: user?.email,
-  //   token: accessToken,
-  // }
+  const userData = {
+    _id: user?._id,
+    displayName: user?.displayName,
+    photoURL: user?.photoURL,
+    email: user?.email,
+    token: accessToken,
+  }
 
-  // return userData
+  return userData
 }
 
 // Get user details from DB
@@ -65,6 +72,7 @@ const getTotalUsersFromDB = async () => {
 
 export const UserService = {
   registerUserIntoDB,
+  loginUserFromDB,
   getUserDetailsFromDB,
   getTotalUsersFromDB,
 }
