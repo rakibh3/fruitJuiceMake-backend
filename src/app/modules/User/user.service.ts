@@ -1,42 +1,54 @@
 import config from '../../config'
 import { generateToken } from '../../helper/generateToken'
+import { Coin } from '../Coin/coin.model'
 import { TUser } from './user.interface'
 import { User } from './user.model'
 
 // Create user into system
-const createUserIntoDB = async (payLoad: TUser) => {
+const registerUserIntoDB = async (payLoad: TUser) => {
   let user = await User.findOne({ email: payLoad.email })
-  console.log(user)
+
+  if (user) {
+    throw new Error('User already with this email')
+  }
 
   // If user not exist then create a new user
   if (!user) {
+    // New user register into database
     user = new User(payLoad)
     await user.save()
+
+    // Default 50 coin allocated to the user
+    const defaultCoin = await Coin.create({ userId: user._id })
+
+    return { user, defaultCoin }
   }
+
+  // const defaultCoin = await Coin.create()
 
   // Payload for jwt
-  const jwtPayload = {
-    id: user?._id,
-    email: user?.email,
-    role: user?.role,
-  }
+  // const jwtPayload = {
+  //   id: user?._id,
+  //   email: user?.email,
+  //   role: user?.role,
+  // }
 
-  // Generate JWT Token
-  const accessToken = generateToken(
-    jwtPayload,
-    config.jwt_access_secret as string,
-    config.jwt_access_expires_in as string,
-  )
+  // // Generate JWT Token
+  // const accessToken = generateToken(
+  //   jwtPayload,
+  //   config.jwt_access_secret as string,
+  //   config.jwt_access_expires_in as string,
+  // )
 
-  const userData = {
-    _id: user?._id,
-    displayName: user?.displayName,
-    photoURL: user?.photoURL,
-    email: user?.email,
-    token: accessToken,
-  }
+  // const userData = {
+  //   _id: user?._id,
+  //   displayName: user?.displayName,
+  //   photoURL: user?.photoURL,
+  //   email: user?.email,
+  //   token: accessToken,
+  // }
 
-  return userData
+  // return userData
 }
 
 // Get user details from DB
@@ -52,7 +64,7 @@ const getTotalUsersFromDB = async () => {
 }
 
 export const UserService = {
-  createUserIntoDB,
+  registerUserIntoDB,
   getUserDetailsFromDB,
   getTotalUsersFromDB,
 }

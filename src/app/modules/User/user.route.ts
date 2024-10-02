@@ -7,12 +7,11 @@ import { USER_ROLE } from './user.constant'
 
 const router = express.Router()
 
-// Create user route endpoints:- /user
+// Register user && add user data into database
 router.post(
-  '/user',
-
+  '/user/register',
   validateRequest(userValidatonSchema),
-  UserController.createUser,
+  UserController.registerUser,
 )
 
 // Get user route endpoints:- /user

@@ -7,7 +7,7 @@ import { USER_ROLE } from '../User/user.constant'
 
 const router = express.Router()
 
-// Coin add route - POST /api/coin
+// Default 50 coin route - POST /api/coin
 router.post(
   '/coin',
   auth(USER_ROLE.user),

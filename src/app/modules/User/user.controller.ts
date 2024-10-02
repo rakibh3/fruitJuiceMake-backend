@@ -4,12 +4,12 @@ import { sendResponse } from '../../utils/sendResponse'
 import { UserService } from './user.service'
 
 // Login user into system
-const createUser = catchAsync(async (req, res) => {
-  const result = await UserService.createUserIntoDB(req.body)
+const registerUser = catchAsync(async (req, res) => {
+  const result = await UserService.registerUserIntoDB(req.body)
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
     success: true,
-    message: 'User create successfully',
+    message: 'User register successfully',
     data: result,
   })
 })
@@ -38,7 +38,7 @@ const getTotalUsers = catchAsync(async (req, res) => {
 })
 
 export const UserController = {
-  createUser,
+  registerUser,
   getUser,
   getTotalUsers,
 }
