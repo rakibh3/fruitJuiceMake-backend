@@ -19,7 +19,7 @@ router.post('/user/login', UserController.loginUser)
 
 // Get user route endpoints:- /user
 router.get(
-  '/user',
+  '/user/me',
   auth(USER_ROLE.admin, USER_ROLE.user),
   UserController.getUser,
 )
