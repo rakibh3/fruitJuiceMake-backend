@@ -9,6 +9,7 @@ class QueryBuilder<T> {
     this.query = query
   }
 
+  // Search query
   search(searchableFields: string[]) {
     const searchTerm = this?.query?.searchTerm
     if (searchTerm) {
@@ -25,11 +26,12 @@ class QueryBuilder<T> {
     return this
   }
 
+  // Filter query
   filter() {
     const queryObj = { ...this.query }
 
     // Filtering
-    const excludeFields = ['searchTerm', 'fields', 'limit', 'page']
+    const excludeFields = ['searchTerm', 'sort', 'limit', 'page', 'fields']
     excludeFields.forEach((el) => delete queryObj[el])
 
     // Convert all string values to case-insensitive regex
@@ -43,6 +45,19 @@ class QueryBuilder<T> {
     return this
   }
 
+  // Sort query
+  sort() {
+    const sortBy = this?.query?.sort
+    if (sortBy) {
+      this.modelQuery = this.modelQuery.sort(sortBy as string)
+    } else {
+      this.modelQuery = this.modelQuery.sort('-createdAt')
+    }
+
+    return this
+  }
+
+  // Pagination query
   paginate() {
     const page = Number(this?.query?.page) || 1
     const limit = Number(this?.query?.limit) || 10
@@ -53,27 +68,13 @@ class QueryBuilder<T> {
     return this
   }
 
+  // Fields limiting
   fields() {
     const fields =
       (this?.query?.fields as string)?.split(',')?.join(' ') || '-__v'
 
     this.modelQuery = this.modelQuery.select(fields)
     return this
-  }
-
-  async countTotal() {
-    const totalQueries = this.modelQuery.getFilter()
-    const total = await this.modelQuery.model.countDocuments(totalQueries)
-    const page = Number(this?.query?.page) || 1
-    const limit = Number(this?.query?.limit) || 10
-    const totalPage = Math.ceil(total / limit)
-
-    return {
-      page,
-      limit,
-      total,
-      totalPage,
-    }
   }
 }
 

@@ -15,13 +15,14 @@ router.post(
   RecipeController.createRecipe,
 )
 
-// Recipe get by id route
-router.get('/recipes/:id', RecipeController.getRecipeById)
-
-router.get('/total-recipes', RecipeController.getTotalRecipes)
-
 // All recipes get route
 router.get('/recipes', RecipeController.getAllRecipe)
+
+// // All recipes get route
+// router.get('/total-recipes', RecipeController.getTotalRecipes)
+
+// Recipe get by id route
+router.get('/recipe/:id', RecipeController.getRecipeById)
 
 router.patch(
   '/recipes/:recipeId/purchase/users',

@@ -1,1 +1,1 @@
-export const recipeSearchableFields = ['name']
+export const recipeSearchableFields = ['title']

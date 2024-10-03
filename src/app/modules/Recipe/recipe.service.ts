@@ -12,21 +12,7 @@ const createRecipeIntoDB = async (payLoad: TRecipe) => {
 // Get all recipes from the database
 const getAllRecipeFromDB = async (query: Record<string, unknown>) => {
   const recipeQuery = new QueryBuilder(
-    Recipe.find(
-      {},
-      {
-        _id: 1,
-        name: 1,
-        image: 1,
-        details: 1,
-        youtubeCode: 1,
-        country: 1,
-        category: 1,
-        creatorEmail: 1,
-        watchCount: 1,
-        purchasedBy: 1,
-      },
-    ),
+    Recipe.find({}, { description: 0 }),
     query,
   )
     .search(recipeSearchableFields)
