@@ -7,8 +7,8 @@ const recipeSchema = new Schema<TRecipe>({
   image: { type: String, required: true },
   description: { type: String, required: true },
   view: { type: Number, default: 0 },
-  createBy: { type: String, required: true },
-  purchaseBy: { type: [String], default: [] },
+  creator: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  purchasers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 })
 
 export const Recipe = model<TRecipe>('Recipe', recipeSchema)

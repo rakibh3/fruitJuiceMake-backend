@@ -1,9 +1,11 @@
+import { Types } from 'mongoose'
+
 export type TRecipe = {
   title: string
   category: string
   image: string
   description: string
   view: number
-  createBy: string
-  purchaseBy: string[]
+  creator: Types.ObjectId
+  purchasers: Types.ObjectId[]
 }
