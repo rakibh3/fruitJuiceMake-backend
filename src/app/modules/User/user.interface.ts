@@ -1,11 +1,12 @@
 /* eslint-disable no-unused-vars */
-import { Model } from 'mongoose'
+import { Model, Types } from 'mongoose'
 import { USER_ROLE } from './user.constant'
 
 export type TUser = {
   displayName: string
   photoURL?: string
   email: string
+  coinId: Types.ObjectId
   role: 'admin' | 'user'
 }
 

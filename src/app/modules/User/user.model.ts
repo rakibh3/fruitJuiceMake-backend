@@ -6,6 +6,11 @@ const userSchema = new Schema<TUser, UserModel>(
     displayName: { type: String, required: true },
     photoURL: { type: String },
     email: { type: String, required: true, unique: true },
+    coinId: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: 'Coin',
+    },
     role: { type: String, enum: ['admin', 'user'], default: 'user' },
   },
   {
