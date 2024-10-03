@@ -19,7 +19,6 @@ const getCoins = catchAsync(async (req, res) => {
 // Decrease 10 coin after view recipe
 const decreaseCoin = catchAsync(async (req, res) => {
   const { id } = req.user
-
   const result = await CoinService.decreaseCoinFromDB(id, 10)
 
   sendResponse(res, {

@@ -9,7 +9,9 @@ const getCoinsFromDB = async (id: string) => {
 // Decrease coin after view recipe
 const decreaseCoinFromDB = async (id: string, coin: number) => {
   const userCoin = await Coin.findOne({ userId: id })
-  if (!userCoin || userCoin.coin < coin) return { message: 'Not enough coin' }
+  if (!userCoin || userCoin.coin < coin) {
+    throw new Error('Not enough coin')
+  }
 
   await Coin.findOneAndUpdate(
     { userId: id },
@@ -21,7 +23,9 @@ const decreaseCoinFromDB = async (id: string, coin: number) => {
 // Increase coin after user add new recipe
 const increaseCoinFromDB = async (id: string, coin: number) => {
   const userCoin = await Coin.findOne({ userId: id })
-  if (!userCoin) return { message: 'User not found' }
+  if (!userCoin) {
+    throw new Error('User not found')
+  }
 
   await Coin.findOneAndUpdate({ userId: id }, { $inc: { coin } }, { new: true })
 }
