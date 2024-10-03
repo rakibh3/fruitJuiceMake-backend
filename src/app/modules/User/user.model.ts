@@ -8,7 +8,6 @@ const userSchema = new Schema<TUser, UserModel>(
     email: { type: String, required: true, unique: true },
     coinId: {
       type: Schema.Types.ObjectId,
-      required: true,
       ref: 'Coin',
     },
     role: { type: String, enum: ['admin', 'user'], default: 'user' },

@@ -1,3 +1,4 @@
+import mongoose from 'mongoose'
 import config from '../../config'
 import { generateToken } from '../../helper/generateToken'
 import { Coin } from '../Coin/coin.model'
@@ -6,22 +7,38 @@ import { User } from './user.model'
 
 // Create user into system
 const registerUserIntoDB = async (payLoad: TUser) => {
-  let user = await User.findOne({ email: payLoad.email })
+  const session = await mongoose.startSession()
+  try {
+    session.startTransaction()
+    let user = await User.findOne({ email: payLoad.email })
 
-  if (user) {
-    throw new Error('User already register with this email')
-  }
+    if (user) {
+      throw new Error('User already register with this email')
+    }
 
-  // If user not exist then create a new user
-  if (!user) {
-    // New user register into database
-    user = new User(payLoad)
-    await user.save()
+    // Create a new coin record for the user
+    const coin = new Coin()
+    await coin.save({ session })
 
-    // Default 50 coin allocated to the user
-    const defaultCoin = await Coin.create({ userId: user._id })
+    // Create a new user with the coinId
+    user = new User({
+      ...payLoad,
+      coinId: coin._id,
+    })
+    await user.save({ session })
 
-    return { user, defaultCoin }
+    // Update the coin's userId with the newly created user's ID
+    coin.userId = user._id
+    await coin.save({ session })
+
+    await session.commitTransaction()
+    session.endSession()
+
+    return { user, coin }
+  } catch (error) {
+    await session.abortTransaction()
+    session.endSession()
+    throw error
   }
 }
 

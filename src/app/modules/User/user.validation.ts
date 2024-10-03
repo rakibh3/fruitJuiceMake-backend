@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+// import mongoose from 'mongoose'
 import { z } from 'zod'
 
 export const userValidatonSchema = z.object({
@@ -12,9 +12,9 @@ export const userValidatonSchema = z.object({
       invalid_type_error: 'Email must be a string',
     })
     .email(),
-  coinId: z.string().refine((val) => {
-    return mongoose.Types.ObjectId.isValid(val)
-  }),
+  // coinId: z.string().refine((val) => {
+  //   return mongoose.Types.ObjectId.isValid(val)
+  // }),
   photoURL: z.string().url().optional().nullable(),
   role: z.enum(['admin', 'user']).default('user'),
 })
