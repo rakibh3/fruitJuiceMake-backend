@@ -5,8 +5,8 @@ import { CoinService } from './coin.service'
 
 // Get coins by userId
 const getCoins = catchAsync(async (req, res) => {
-  const { userId } = req.params
-  const result = await CoinService.getCoinsFromDB(userId)
+  const { id } = req.user
+  const result = await CoinService.getCoinsFromDB(id)
 
   sendResponse(res, {
     success: true,

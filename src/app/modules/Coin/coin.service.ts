@@ -1,9 +1,8 @@
 import { Coin } from './coin.model'
 
 // Get coin from DB by userId
-const getCoinsFromDB = async (userId: string) => {
-  const coins = await Coin.findOne({ userId: userId })
-
+const getCoinsFromDB = async (id: string) => {
+  const coins = await Coin.findOne({ userId: id })
   return coins
 }
 
