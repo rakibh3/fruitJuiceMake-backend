@@ -32,22 +32,8 @@ export const recipeValidationSchema = z.object({
     .min(1)
     .max(1000),
 
-  createBy: z
-    .string({
-      required_error: 'Creator email is required',
-      invalid_type_error: 'Creator email must be a string',
-    })
-    .email(),
-
   view: z.number({
     required_error: 'Watch count is required',
     invalid_type_error: 'Watch count must be a number',
   }),
-
-  purchaseBy: z.array(
-    z.string({
-      required_error: 'Purchased by is required',
-      invalid_type_error: 'Purchased by must be a string',
-    }),
-  ),
 })

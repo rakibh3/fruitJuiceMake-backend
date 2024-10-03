@@ -7,7 +7,7 @@ import { USER_ROLE } from '../User/user.constant'
 
 const router = express.Router()
 
-// Recipe post route
+// Recipe create route
 router.post(
   '/recipe',
   auth(USER_ROLE.user),
@@ -15,13 +15,13 @@ router.post(
   RecipeController.createRecipe,
 )
 
+// Recipe get by id route
+router.get('/recipes/:id', RecipeController.getRecipeById)
+
 router.get('/total-recipes', RecipeController.getTotalRecipes)
 
 // All recipes get route
 router.get('/recipes', RecipeController.getAllRecipe)
-
-// Recipe get by id route
-router.get('/recipes/:id', RecipeController.getRecipeById)
 
 router.patch(
   '/recipes/:recipeId/purchase/users',

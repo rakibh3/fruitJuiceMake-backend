@@ -7,5 +7,9 @@ export type TRecipe = {
   description: string
   view: number
   creator: Types.ObjectId
-  purchasers: Types.ObjectId[]
+}
+
+export type TPurchaserSchema = {
+  recipe: Types.ObjectId
+  purchaser: Types.ObjectId
 }

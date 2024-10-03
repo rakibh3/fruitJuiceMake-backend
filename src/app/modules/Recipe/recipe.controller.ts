@@ -4,7 +4,10 @@ import { RecipeService } from './recipe.service'
 
 // Create a new recipe
 const createRecipe = catchAsync(async (req, res) => {
-  const result = await RecipeService.createRecipeIntoDB(req.body)
+  const { id } = req.user
+  const recipeData = { ...req.body, creator: id }
+
+  const result = await RecipeService.createRecipeIntoDB(recipeData)
 
   sendResponse(res, {
     statusCode: 201,
