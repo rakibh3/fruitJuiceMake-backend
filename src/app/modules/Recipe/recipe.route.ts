@@ -18,16 +18,11 @@ router.post(
 // All recipes get route
 router.get('/recipes', RecipeController.getAllRecipe)
 
-// // All recipes get route
-// router.get('/total-recipes', RecipeController.getTotalRecipes)
-
 // Recipe get by id route
-router.get('/recipe/:id', RecipeController.getRecipeById)
-
-router.patch(
-  '/recipes/:recipeId/purchase/users',
-  auth(),
-  RecipeController.addUserToPurchasedByArray,
+router.get(
+  '/recipe/:recipeId',
+  auth(USER_ROLE.user),
+  RecipeController.getRecipeById,
 )
 
 // view count get route

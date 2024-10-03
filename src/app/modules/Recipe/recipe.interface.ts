@@ -8,8 +8,3 @@ export type TRecipe = {
   view: number
   creator: Types.ObjectId
 }
-
-export type TPurchaserSchema = {
-  recipe: Types.ObjectId
-  purchaser: Types.ObjectId
-}

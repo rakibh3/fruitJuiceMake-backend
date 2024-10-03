@@ -1,4 +1,7 @@
+import httpStatus from 'http-status'
 import QueryBuilder from '../../builder/QueryBuilder'
+import AppError from '../../error/AppError'
+import { Purchaser } from '../Coin/coin.model'
 import { recipeSearchableFields } from './recipe.constant'
 import { TRecipe } from './recipe.interface'
 import { Recipe } from './recipe.model'
@@ -25,28 +28,32 @@ const getAllRecipeFromDB = async (query: Record<string, unknown>) => {
 }
 
 // Get recipe by id from the database
-const getRecipeByIdFromDB = async (id: string) => {
-  const result = await Recipe.findById(id)
-  return result
-}
+const getRecipeByIdFromDB = async (userId: string, recipeId: string) => {
+  // Find the recipe by id
+  const recipe = await Recipe.findById(recipeId)
+  if (!recipe) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Recipe not found')
+  }
 
-// Get total recipes from the database
-const getTotalRecipesFromDB = async () => {
-  const result = await Recipe.countDocuments()
-  return result
-}
+  // Check if the user is the creator of the recipe
+  if (recipe.creator.toString() === userId) {
+    return recipe
+  }
 
-// Add user to purchased by array in the database
-const addUserToPurchasedByArrayInDB = async (
-  email: string,
-  recipeId: string,
-) => {
-  const result = await Recipe.findOneAndUpdate(
-    { _id: recipeId },
-    { $push: { purchasedBy: email } },
-    { new: true },
-  )
-  return result
+  // Check if the user has purchased the recipe
+  const purchaser = await Purchaser.findOne({
+    recipe: recipeId,
+    purchaser: userId,
+  })
+
+  if (!purchaser) {
+    throw new AppError(
+      httpStatus.FORBIDDEN,
+      'Access denied: You have not purchased this recipe.',
+    )
+  }
+
+  return recipe
 }
 
 // Increase watch count in the database
@@ -63,7 +70,5 @@ export const RecipeService = {
   createRecipeIntoDB,
   getAllRecipeFromDB,
   getRecipeByIdFromDB,
-  getTotalRecipesFromDB,
-  addUserToPurchasedByArrayInDB,
   increaseWatchCountInDB,
 }

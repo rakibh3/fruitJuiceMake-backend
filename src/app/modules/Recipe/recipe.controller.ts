@@ -1,3 +1,4 @@
+import httpStatus from 'http-status'
 import { catchAsync } from '../../utils/catchAsync'
 import { sendResponse } from '../../utils/sendResponse'
 import { RecipeService } from './recipe.service'
@@ -30,39 +31,13 @@ const getAllRecipe = catchAsync(async (req, res) => {
 
 // Get recipe by id
 const getRecipeById = catchAsync(async (req, res) => {
-  const result = await RecipeService.getRecipeByIdFromDB(req.params.id)
+  const { id: userId } = req.user
+  const { recipeId } = req.params
+
+  const result = await RecipeService.getRecipeByIdFromDB(userId, recipeId)
   sendResponse(res, {
-    statusCode: 200,
+    statusCode: httpStatus.OK,
     message: 'Recipe fetched successfully',
-    success: true,
-    data: result,
-  })
-})
-
-// Get total recipes
-const getTotalRecipes = catchAsync(async (req, res) => {
-  const result = await RecipeService.getTotalRecipesFromDB()
-  sendResponse(res, {
-    statusCode: 200,
-    message: 'Total recipes fetched successfully',
-    success: true,
-    data: result,
-  })
-})
-
-// Add user to purchased by array
-const addUserToPurchasedByArray = catchAsync(async (req, res) => {
-  const { email } = req.user
-  const { recipeId } = req.body
-
-  const result = await RecipeService.addUserToPurchasedByArrayInDB(
-    email,
-    recipeId,
-  )
-
-  sendResponse(res, {
-    statusCode: 200,
-    message: 'User added to purchased by array successfully',
     success: true,
     data: result,
   })
@@ -86,7 +61,5 @@ export const RecipeController = {
   createRecipe,
   getAllRecipe,
   getRecipeById,
-  getTotalRecipes,
-  addUserToPurchasedByArray,
   increaseWatchCount,
 }
