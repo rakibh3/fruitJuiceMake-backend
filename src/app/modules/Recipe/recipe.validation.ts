@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 export const recipeValidationSchema = z.object({
-  name: z
+  title: z
     .string({
       required_error: 'Name is required',
       invalid_type_error: 'Name must be a string',
@@ -24,7 +24,7 @@ export const recipeValidationSchema = z.object({
     })
     .url(),
 
-  details: z
+  description: z
     .string({
       required_error: 'Details is required',
       invalid_type_error: 'Details must be a string',
@@ -32,19 +32,19 @@ export const recipeValidationSchema = z.object({
     .min(1)
     .max(1000),
 
-  creatorEmail: z
+  createBy: z
     .string({
       required_error: 'Creator email is required',
       invalid_type_error: 'Creator email must be a string',
     })
     .email(),
 
-  watchCount: z.number({
+  view: z.number({
     required_error: 'Watch count is required',
     invalid_type_error: 'Watch count must be a number',
   }),
 
-  purchasedBy: z.array(
+  purchaseBy: z.array(
     z.string({
       required_error: 'Purchased by is required',
       invalid_type_error: 'Purchased by must be a string',

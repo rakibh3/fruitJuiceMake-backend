@@ -8,7 +8,7 @@ import { USER_ROLE } from '../User/user.constant'
 const router = express.Router()
 
 router.post(
-  '/recipes',
+  '/recipe',
   auth(USER_ROLE.user),
   validateRequest(recipeValidationSchema),
   RecipeController.createRecipe,
