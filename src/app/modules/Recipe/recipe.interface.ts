@@ -1,9 +1,9 @@
 export type TRecipe = {
-  name: string
+  title: string
   category: string
   image: string
-  details: string
-  watchCount: number
-  creatorEmail: string
-  purchasedBy: string[]
+  description: string
+  view: number
+  createBy: string
+  purchaseBy: string[]
 }
