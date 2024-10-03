@@ -7,6 +7,7 @@ import { USER_ROLE } from '../User/user.constant'
 
 const router = express.Router()
 
+// Recipe post route
 router.post(
   '/recipe',
   auth(USER_ROLE.user),
@@ -16,18 +17,21 @@ router.post(
 
 router.get('/total-recipes', RecipeController.getTotalRecipes)
 
+// All recipes get route
 router.get('/recipes', RecipeController.getAllRecipe)
 
+// Recipe get by id route
 router.get('/recipes/:id', RecipeController.getRecipeById)
 
 router.patch(
-  '/add-user-to-purchased-by-array',
+  '/recipes/:recipeId/purchase/users',
   auth(),
   RecipeController.addUserToPurchasedByArray,
 )
 
+// view count get route
 router.patch(
-  '/increase-watch-count',
+  '/recipes/:recipeId/watch-count',
   auth(),
   RecipeController.increaseWatchCount,
 )
