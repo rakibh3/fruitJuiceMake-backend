@@ -5,6 +5,7 @@ import { Purchaser } from '../Coin/coin.model'
 import { recipeSearchableFields } from './recipe.constant'
 import { TRecipe } from './recipe.interface'
 import { Recipe } from './recipe.model'
+import { getRecipeDetails } from '../../utils/getRecipeDetails'
 
 // Create a new recipe in the database
 const createRecipeIntoDB = async (payLoad: TRecipe) => {
@@ -30,10 +31,7 @@ const getAllRecipeFromDB = async (query: Record<string, unknown>) => {
 // Get recipe by id from the database
 const getRecipeByIdFromDB = async (userId: string, recipeId: string) => {
   // Find the recipe by id
-  const recipe = await Recipe.findById(recipeId)
-  if (!recipe) {
-    throw new AppError(httpStatus.NOT_FOUND, 'Recipe not found')
-  }
+  const recipe = await getRecipeDetails(recipeId)
 
   // Check if the user is the creator of the recipe
   if (recipe.creator.toString() === userId) {
