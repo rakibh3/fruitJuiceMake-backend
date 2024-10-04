@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 import AppError from '../../error/AppError'
 import { Coin, Purchaser } from './coin.model'
 import httpStatus from 'http-status'
-import { Recipe } from '../Recipe/recipe.model'
+import { getRecipeDetails } from '../../utils/getRecipeDetails'
 
 // Get coin from DB by userId
 const getCoinsFromDB = async (id: string) => {
@@ -36,9 +36,10 @@ const transferCoins = async (
 
     // If the user has already purchased the recipe, return
     if (existingPurchase) {
+      const recipeDetails = await getRecipeDetails(recipeId, session)
       await session.commitTransaction()
       session.endSession()
-      return true
+      return recipeDetails
     }
 
     // Decrease coins from the user
@@ -72,7 +73,8 @@ const transferCoins = async (
       session,
     })
 
-    const rescipeDetails = await Recipe.findById(recipeId).session(session)
+    // Fetch the recipe details
+    const rescipeDetails = await getRecipeDetails(recipeId, session)
 
     await session.commitTransaction()
     session.endSession()
