@@ -18,12 +18,6 @@ const transferCoins = async (
   decrement: number,
   increment: number,
 ) => {
-  console.log('Service UserId', userId)
-  console.log('Service CreatorId', creatorId)
-  console.log('Service RecipeId', recipeId)
-  console.log('Decrement', decrement)
-  console.log('Increment', increment)
-
   const session = await mongoose.startSession()
   session.startTransaction()
 
