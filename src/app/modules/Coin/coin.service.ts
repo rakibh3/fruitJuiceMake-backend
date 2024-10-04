@@ -1,8 +1,9 @@
 import mongoose from 'mongoose'
-import AppError from '../../error/AppError'
-import { Coin, Purchaser } from './coin.model'
 import httpStatus from 'http-status'
+import AppError from '../../error/AppError'
 import { getRecipeDetails } from '../../utils/getRecipeDetails'
+import { Coin, Purchaser } from './coin.model'
+import { Recipe } from '../Recipe/recipe.model'
 
 // Get coin from DB by userId
 const getCoinsFromDB = async (id: string) => {
@@ -66,6 +67,13 @@ const transferCoins = async (
     await Purchaser.create([{ recipe: recipeId, purchaser: userId }], {
       session,
     })
+
+    // Increment the view count for the recipe
+    await Recipe.findByIdAndUpdate(
+      recipeId,
+      { $inc: { viewCount: 1 } },
+      { session },
+    )
 
     // Fetch the recipe details
     const rescipeDetails = await getRecipeDetails(recipeId, session)
