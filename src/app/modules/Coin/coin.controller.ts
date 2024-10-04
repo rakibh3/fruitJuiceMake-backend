@@ -16,35 +16,28 @@ const getCoins = catchAsync(async (req, res) => {
   })
 })
 
-// Decrease 10 coin after view recipe
-const decreaseCoin = catchAsync(async (req, res) => {
-  const { id } = req.user
-  const result = await CoinService.decreaseCoinFromDB(id, 10)
+// Transfer coins when a user views a recipe
+const viewRecipeAndTransferCoins = catchAsync(async (req, res) => {
+  const { id: userId } = req.user
+  const { creatorId, recipeId } = req.body
+
+  const result = await CoinService.transferCoins(
+    userId,
+    recipeId,
+    creatorId,
+    10,
+    8,
+  )
 
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: 'Coin decreased successfully',
-    data: result,
-  })
-})
-
-// Increase 10 coin after user add new recipe
-const increaseCoin = catchAsync(async (req, res) => {
-  const { id } = req.user
-
-  const result = await CoinService.increaseCoinFromDB(id, 5)
-
-  sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    message: 'Coin increased successfully',
+    message: 'Coins transferred successfully',
     data: result,
   })
 })
 
 export const CoinController = {
   getCoins,
-  decreaseCoin,
-  increaseCoin,
+  viewRecipeAndTransferCoins,
 }

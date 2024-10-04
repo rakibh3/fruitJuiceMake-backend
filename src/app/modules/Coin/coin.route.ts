@@ -10,18 +10,11 @@ const router = express.Router()
 // Get coin by userId
 router.get('/coins', auth(USER_ROLE.user), CoinController.getCoins)
 
-// Decrease 10 coin after view recipe - PATCH /api/coin/decrease
-router.patch(
-  '/coin/decrease',
+// Transfer coins when a user views a recipe
+router.post(
+  '/coin/transfer',
   auth(USER_ROLE.user),
-  CoinController.decreaseCoin,
-)
-
-// Increase 10 coin after user add new recipe - PATCH /api/coin/increase
-router.patch(
-  '/coin/increase',
-  auth(USER_ROLE.user),
-  CoinController.increaseCoin,
+  CoinController.viewRecipeAndTransferCoins,
 )
 
 export const CoinRoute = router
