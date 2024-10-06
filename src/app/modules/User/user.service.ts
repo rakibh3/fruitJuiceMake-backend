@@ -4,6 +4,8 @@ import { generateToken } from '../../helper/generateToken'
 import { Coin } from '../Coin/coin.model'
 import { TUser } from './user.interface'
 import { User } from './user.model'
+import AppError from '../../error/AppError'
+import httpStatus from 'http-status'
 
 // Create user into system
 const registerUserIntoDB = async (payLoad: TUser) => {
@@ -13,7 +15,7 @@ const registerUserIntoDB = async (payLoad: TUser) => {
     let user = await User.findOne({ email: payLoad.email })
 
     if (user) {
-      throw new Error('User already register with this email')
+      throw new AppError(httpStatus.CONFLICT, 'User already exists')
     }
 
     // Create a new coin record for the user
@@ -31,10 +33,30 @@ const registerUserIntoDB = async (payLoad: TUser) => {
     coin.userId = user._id
     await coin.save({ session })
 
+    // Payload for jwt
+    const jwtPayload = {
+      id: user?._id,
+      email: user?.email,
+      role: user?.role,
+    }
+
+    // Generate JWT Token
+    const accessToken = generateToken(
+      jwtPayload,
+      config.jwt_access_secret as string,
+      config.jwt_access_expires_in as string,
+    )
+
+    const userData = {
+      ...user.toJSON(),
+      token: accessToken,
+      defaultCoin: coin.coin,
+    }
+
     await session.commitTransaction()
     session.endSession()
 
-    return { user, coin }
+    return { ...userData }
   } catch (error) {
     await session.abortTransaction()
     session.endSession()

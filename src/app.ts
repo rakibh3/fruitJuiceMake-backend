@@ -11,7 +11,11 @@ const app: Application = express()
 app.use(express.json())
 app.use(
   cors({
-    origin: ['https://recipe-rakib03.web.app', 'http://localhost:5173'],
+    origin: [
+      'https://recipe-rakib03.web.app',
+      'http://localhost:5173',
+      'http://localhost:4173',
+    ],
     credentials: true,
   }),
 )
