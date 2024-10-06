@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
-import app from './app'
-import config from './config'
+import app from '@/app'
+import config from '@/config'
 
 // Establish database connection
 const startServer = async () => {

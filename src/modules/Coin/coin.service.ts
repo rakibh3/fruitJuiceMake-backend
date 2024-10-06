@@ -1,9 +1,10 @@
 import httpStatus from 'http-status'
 import mongoose from 'mongoose'
 
-import AppError from '../../error/AppError'
-import { getRecipeDetails } from '../../utils/getRecipeDetails'
-import { Recipe } from '../Recipe/recipe.model'
+import AppError from '@/error/AppError'
+import { Recipe } from '@/modules/Recipe/recipe.model'
+import { getRecipeDetails } from '@/utils/getRecipeDetails'
+
 import { Coin, Purchaser } from './coin.model'
 
 // Get coin from DB by userId

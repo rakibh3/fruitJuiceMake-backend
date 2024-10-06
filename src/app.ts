@@ -1,8 +1,9 @@
 import cors from 'cors'
 import express, { Application, Request, Response } from 'express'
 
-import { globalErrorHandler } from './error/globalErrorHandler'
-import { notFoundRoute } from './error/notFoundRoute'
+import { globalErrorHandler } from '@/error/globalErrorHandler'
+import { notFoundRoute } from '@/error/notFoundRoute'
+
 import router from './routes'
 
 // Create Express app

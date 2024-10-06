@@ -4,7 +4,7 @@ import { ErrorRequestHandler } from 'express'
 import httpStatus from 'http-status'
 import { ZodError } from 'zod'
 
-import { handleZodValidationError } from './zodError'
+import { handleZodValidationError } from '@/error/zodError'
 
 export const globalErrorHandler: ErrorRequestHandler = (
   error,

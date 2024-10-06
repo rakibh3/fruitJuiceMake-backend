@@ -2,8 +2,8 @@
 import httpStatus from 'http-status'
 import { ClientSession } from 'mongoose'
 
-import AppError from '../error/AppError'
-import { Recipe } from '../modules/Recipe/recipe.model'
+import AppError from '@/error/AppError'
+import { Recipe } from '@/modules/Recipe/recipe.model'
 
 // Utility function to fetch recipe details
 export const getRecipeDetails = async (

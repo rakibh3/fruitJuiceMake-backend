@@ -1,10 +1,11 @@
 import httpStatus from 'http-status'
 import mongoose from 'mongoose'
 
-import config from '../../config'
-import AppError from '../../error/AppError'
-import { generateToken } from '../../helper/generateToken'
-import { Coin } from '../Coin/coin.model'
+import config from '@/config'
+import AppError from '@/error/AppError'
+import { generateToken } from '@/helper/generateToken'
+import { Coin } from '@/modules/Coin/coin.model'
+
 import { TUser } from './user.interface'
 import { User } from './user.model'
 
