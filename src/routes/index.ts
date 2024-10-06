@@ -1,8 +1,9 @@
 import { Router } from 'express'
-import { UserRoute } from '../modules/User/user.route'
+
+import { CoinRoute } from '../modules/Coin/coin.route'
 import { RecipeRouter } from '../modules/Recipe/recipe.route'
 import { PaymentRoute } from '../modules/Stripe/stripe.route'
-import { CoinRoute } from '../modules/Coin/coin.route'
+import { UserRoute } from '../modules/User/user.route'
 
 const router = Router()
 

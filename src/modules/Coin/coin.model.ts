@@ -1,4 +1,5 @@
 import { model, Schema } from 'mongoose'
+
 import { TCoin, TPurchaserSchema } from './coin.interface'
 
 const coinSchema = new Schema<TCoin>(

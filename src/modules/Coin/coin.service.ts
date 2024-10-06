@@ -1,9 +1,10 @@
-import mongoose from 'mongoose'
 import httpStatus from 'http-status'
+import mongoose from 'mongoose'
+
 import AppError from '../../error/AppError'
 import { getRecipeDetails } from '../../utils/getRecipeDetails'
-import { Coin, Purchaser } from './coin.model'
 import { Recipe } from '../Recipe/recipe.model'
+import { Coin, Purchaser } from './coin.model'
 
 // Get coin from DB by userId
 const getCoinsFromDB = async (id: string) => {

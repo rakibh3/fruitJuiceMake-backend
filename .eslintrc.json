@@ -13,14 +13,17 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "simple-import-sort"],
   "rules": {
     "no-unused-vars": "error",
     "no-unused-expressions": "error",
     "prefer-const": "error",
     "no-console": "warn",
-    "no-undef": "error"
+    "no-undef": "error",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error"
   },
+
   "globals": {
     "process": "readonly"
   }

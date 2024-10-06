@@ -1,9 +1,10 @@
 import express from 'express'
-import { UserController } from './user.controller'
-import { validateRequest } from '../../middlewares/validateRequest'
-import { userValidatonSchema } from './user.validation'
+
 import auth from '../../middlewares/auth'
+import { validateRequest } from '../../middlewares/validateRequest'
 import { USER_ROLE } from './user.constant'
+import { UserController } from './user.controller'
+import { userValidatonSchema } from './user.validation'
 
 const router = express.Router()
 

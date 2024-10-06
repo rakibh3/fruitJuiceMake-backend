@@ -1,4 +1,5 @@
-import { Schema, model } from 'mongoose'
+import { model,Schema } from 'mongoose'
+
 import { TRecipe } from './recipe.interface'
 
 const recipeSchema = new Schema<TRecipe>({

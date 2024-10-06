@@ -1,4 +1,5 @@
 import express from 'express'
+
 import { createPaymentIntent } from './stripe.controller'
 
 const router = express.Router()
