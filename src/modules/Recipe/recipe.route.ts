@@ -27,11 +27,4 @@ router.get(
   RecipeController.getRecipeById,
 )
 
-// view count get route
-router.patch(
-  '/recipes/:recipeId/watch-count',
-  auth(),
-  RecipeController.increaseWatchCount,
-)
-
-export const RecipeRouter = router
+export const RecipeRoute = router

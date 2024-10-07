@@ -71,11 +71,7 @@ const transferCoins = async (
     })
 
     // Increment the view count for the recipe
-    await Recipe.findByIdAndUpdate(
-      recipeId,
-      { $inc: { viewCount: 1 } },
-      { session },
-    )
+    await Recipe.findByIdAndUpdate(recipeId, { $inc: { view: 1 } }, { session })
 
     // Fetch the recipe details
     const rescipeDetails = await getRecipeDetails(recipeId, session)
