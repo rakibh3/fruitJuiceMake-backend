@@ -21,15 +21,9 @@ const getCoins = catchAsync(async (req, res) => {
 // Transfer coins when a user views a recipe
 const viewRecipeAndTransferCoins = catchAsync(async (req, res) => {
   const { id: userId } = req.user
-  const { creatorId, recipeId } = req.body
+  const { recipeId } = req.body
 
-  const result = await CoinService.transferCoins(
-    userId,
-    recipeId,
-    creatorId,
-    10,
-    8,
-  )
+  const result = await CoinService.transferCoins(userId, recipeId, 10, 8)
 
   sendResponse(res, {
     success: true,

@@ -17,7 +17,6 @@ const getCoinsFromDB = async (id: string) => {
 const transferCoins = async (
   userId: string,
   recipeId: string,
-  creatorId: string,
   decrement: number,
   increment: number,
 ) => {
@@ -25,6 +24,9 @@ const transferCoins = async (
   session.startTransaction()
 
   try {
+    const recipe = await getRecipeDetails(recipeId, session)
+    const creatorId = recipe.creator.toString()
+
     // Check if the user has already purchased the recipe
     const existingPurchase = await Purchaser.findOne({
       recipe: recipeId,
@@ -33,16 +35,18 @@ const transferCoins = async (
 
     // If the user has already purchased the recipe, return
     if (existingPurchase) {
-      const recipeDetails = await getRecipeDetails(recipeId, session)
       await session.commitTransaction()
       session.endSession()
-      return recipeDetails
+      return recipe
     }
 
     // Decrease coins from the user
     const userCoin = await Coin.findOne({ userId }).session(session)
     if (!userCoin || userCoin.coin < decrement) {
-      throw new AppError(httpStatus.BAD_REQUEST, 'Not enough coins')
+      throw new AppError(
+        httpStatus.BAD_REQUEST,
+        'Not enough coins for this purchase',
+      )
     }
 
     await Coin.findOneAndUpdate(
@@ -56,7 +60,9 @@ const transferCoins = async (
       session,
     )
     if (!creatorCoin) {
-      throw new AppError(httpStatus.NOT_FOUND, 'Creator not found')
+      await session.commitTransaction()
+      session.endSession()
+      return recipe
     }
 
     await Coin.findOneAndUpdate(
@@ -73,12 +79,9 @@ const transferCoins = async (
     // Increment the view count for the recipe
     await Recipe.findByIdAndUpdate(recipeId, { $inc: { view: 1 } }, { session })
 
-    // Fetch the recipe details
-    const rescipeDetails = await getRecipeDetails(recipeId, session)
-
     await session.commitTransaction()
     session.endSession()
-    return rescipeDetails
+    return recipe
   } catch (error) {
     await session.abortTransaction()
     session.endSession()

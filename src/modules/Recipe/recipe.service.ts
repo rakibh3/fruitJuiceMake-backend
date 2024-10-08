@@ -1,7 +1,4 @@
-import httpStatus from 'http-status'
-
 import QueryBuilder from '@/builder/QueryBuilder'
-import AppError from '@/error/AppError'
 import { Purchaser } from '@/modules/Coin/coin.model'
 import { getRecipeDetails } from '@/utils/getRecipeDetails'
 
@@ -47,16 +44,13 @@ const getRecipeByIdFromDB = async (userId: string, recipeId: string) => {
   })
 
   if (!purchaser) {
-    throw new AppError(
-      httpStatus.FORBIDDEN,
-      'Access denied: You have not purchased this recipe.',
-    )
+    return { purchased: false }
   }
 
   // Increment the view count since the user is not the creator
   await Recipe.findByIdAndUpdate(recipeId, { $inc: { view: 1 } })
 
-  return recipe
+  return { recipe, purchased: true }
 }
 
 export const RecipeService = {
