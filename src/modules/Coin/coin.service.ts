@@ -45,7 +45,7 @@ const transferCoins = async (
     if (!userCoin || userCoin.coin < decrement) {
       throw new AppError(
         httpStatus.BAD_REQUEST,
-        'Not enough coins for this purchase',
+        'Not enough coins for this purchase!',
       )
     }
 
