@@ -49,27 +49,31 @@ const transferCoins = async (
       )
     }
 
-    await Coin.findOneAndUpdate(
-      { userId },
-      { $inc: { coin: -decrement } },
-      { new: true, session },
-    )
-
     // Add coins to the creator
     const creatorCoin = await Coin.findOne({ userId: creatorId }).session(
       session,
     )
-    if (!creatorCoin) {
-      await session.commitTransaction()
-      session.endSession()
-      return recipe
-    }
+    if (creatorCoin) {
+      // Decrease coins from the user
+      await Coin.findOneAndUpdate(
+        { userId },
+        { $inc: { coin: -decrement } },
+        { new: true, session },
+      )
 
-    await Coin.findOneAndUpdate(
-      { userId: creatorId },
-      { $inc: { coin: increment } },
-      { new: true, session },
-    )
+      // Add coins to the creator
+      await Coin.findOneAndUpdate(
+        { userId: creatorId },
+        { $inc: { coin: increment } },
+        { new: true, session },
+      )
+    } else {
+      await Coin.findOneAndUpdate(
+        { userId },
+        { $inc: { coin: -decrement } },
+        { new: true, session },
+      )
+    }
 
     // Add user to the Purchaser collection
     await Purchaser.create([{ recipe: recipeId, purchaser: userId }], {

@@ -50,7 +50,7 @@ const getRecipeByIdFromDB = async (userId: string, recipeId: string) => {
   // Increment the view count since the user is not the creator
   await Recipe.findByIdAndUpdate(recipeId, { $inc: { view: 1 } })
 
-  return { recipe, purchased: true }
+  return { recipe: recipe, purchased: true }
 }
 
 export const RecipeService = {
