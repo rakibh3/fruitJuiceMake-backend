@@ -14,7 +14,7 @@ app.use(express.json())
 app.use(
   cors({
     origin: [
-      'https://recipe-rakib03.web.app',
+      'https://juicers-cv.vercel.app',
       'http://localhost:5173',
       'http://localhost:4173',
     ],
