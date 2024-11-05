@@ -17,6 +17,25 @@ export const recipeValidationSchema = z.object({
     .min(1)
     .max(50),
 
+  calories: z
+    .number({
+      required_error: 'Calories is required',
+      invalid_type_error: 'Calories must be a number',
+    })
+    .min(1),
+
+  preparationTime: z
+    .number({
+      required_error: 'Preparation time is required',
+      invalid_type_error: 'Preparation time must be a number',
+    })
+    .min(1),
+
+  recipeSummary: z.string({
+    required_error: 'Summary is required',
+    invalid_type_error: 'Summary must be a string',
+  }),
+
   image: z
     .string({
       required_error: 'Image URL is required',
@@ -31,9 +50,4 @@ export const recipeValidationSchema = z.object({
     })
     .min(1)
     .max(1000),
-
-  view: z.number({
-    required_error: 'Watch count is required',
-    invalid_type_error: 'Watch count must be a number',
-  }),
 })
