@@ -22,6 +22,7 @@ const coinSchema = new Schema<TCoin>(
 const purchaserSchema = new Schema<TPurchaserSchema>({
   recipe: { type: Schema.Types.ObjectId, ref: 'Recipe', required: true },
   purchaser: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  creator: { type: Schema.Types.ObjectId, ref: 'User', required: true },
 })
 
 export const Coin = model<TCoin>('Coin', coinSchema)

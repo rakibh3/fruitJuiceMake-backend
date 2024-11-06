@@ -45,8 +45,22 @@ const getRecipeById = catchAsync(async (req, res) => {
   })
 })
 
+// Purchase history
+const getRecipesHistory = catchAsync(async (req, res) => {
+  const { id } = req.user
+  const result = await RecipeService.getRecipesHistoryFromDB(id)
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Purchased history retrieved successfully',
+    data: result,
+  })
+})
+
 export const RecipeController = {
   createRecipe,
   getAllRecipe,
   getRecipeById,
+  getRecipesHistory,
 }

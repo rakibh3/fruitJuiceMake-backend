@@ -53,8 +53,31 @@ const getRecipeByIdFromDB = async (userId: string, recipeId: string) => {
   return { recipe: recipe, purchased: true }
 }
 
+// Get purchased history from DB by userId
+const getRecipesHistoryFromDB = async (id: string) => {
+  const recipes = await Recipe.find({ creator: id }).populate('creator', '_id')
+
+  const creatorId = recipes.map((recipe) => recipe.creator._id)
+
+  const soldRecipes = await Purchaser.find({
+    creator: { $in: creatorId },
+  })
+
+  // const recipeCreatedByUser = recipes.length
+  const coinEarned = soldRecipes.length * 8
+  const viewCount = recipes.reduce((acc, recipe) => acc + recipe.view, 0)
+
+  return {
+    recipeCreatedByUser: recipes,
+    soldRecipes,
+    coinEarned,
+    viewCount,
+  }
+}
+
 export const RecipeService = {
   createRecipeIntoDB,
   getAllRecipeFromDB,
   getRecipeByIdFromDB,
+  getRecipesHistoryFromDB,
 }

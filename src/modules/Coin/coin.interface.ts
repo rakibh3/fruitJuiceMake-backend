@@ -8,4 +8,5 @@ export type TCoin = {
 export type TPurchaserSchema = {
   recipe: Types.ObjectId
   purchaser: Types.ObjectId
+  creator: Types.ObjectId
 }

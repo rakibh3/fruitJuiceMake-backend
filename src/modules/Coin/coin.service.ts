@@ -76,9 +76,12 @@ const transferCoins = async (
     }
 
     // Add user to the Purchaser collection
-    await Purchaser.create([{ recipe: recipeId, purchaser: userId }], {
-      session,
-    })
+    await Purchaser.create(
+      [{ recipe: recipeId, purchaser: userId, creator: creatorId }],
+      {
+        session,
+      },
+    )
 
     // Increment the view count for the recipe
     await Recipe.findByIdAndUpdate(recipeId, { $inc: { view: 1 } }, { session })
