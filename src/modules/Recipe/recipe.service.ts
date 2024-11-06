@@ -67,11 +67,24 @@ const getRecipesHistoryFromDB = async (id: string) => {
   const coinEarned = soldRecipes.length * 8
   const viewCount = recipes.reduce((acc, recipe) => acc + recipe.view, 0)
 
+  const categoryData: { [key: string]: number } = {}
+  recipes
+    .map((recipe) => recipe.category)
+    .forEach((category) => {
+      categoryData[category] = (categoryData[category] || 0) + 1
+    })
+
+  const categories = Object.keys(categoryData).map((category) => ({
+    name: category,
+    value: categoryData[category],
+  }))
+
   return {
     recipeCreatedByUser: recipes,
     soldRecipes,
     coinEarned,
     viewCount,
+    categories,
   }
 }
 
