@@ -54,7 +54,7 @@ const getRecipeByIdFromDB = async (userId: string, recipeId: string) => {
 }
 
 // Get purchased history from DB by userId
-const getRecipesHistoryFromDB = async (id: string) => {
+const getUserRecipesHistoryFromDB = async (id: string) => {
   const recipes = await Recipe.find({ creator: id }).populate('creator', '_id')
 
   const creatorId = recipes.map((recipe) => recipe.creator._id)
@@ -92,5 +92,5 @@ export const RecipeService = {
   createRecipeIntoDB,
   getAllRecipeFromDB,
   getRecipeByIdFromDB,
-  getRecipesHistoryFromDB,
+  getUserRecipesHistoryFromDB,
 }

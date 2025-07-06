@@ -29,9 +29,9 @@ router.get(
 
 // Get purchased history
 router.get(
-  '/recipes/history',
+  '/recipes/history/user',
   auth(USER_ROLE.user),
-  RecipeController.getRecipesHistory,
+  RecipeController.getUserRecipesHistory,
 )
 
 export const RecipeRoute = router
