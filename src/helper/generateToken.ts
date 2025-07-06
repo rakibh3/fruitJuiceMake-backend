@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import jwt from 'jsonwebtoken'
+import jwt, { SignOptions } from 'jsonwebtoken'
 
 export const generateToken = (
   payLoad: any,
@@ -8,6 +7,6 @@ export const generateToken = (
 ) => {
   const accessToken = jwt.sign(payLoad, secret, {
     expiresIn,
-  })
+  } as SignOptions)
   return accessToken
 }

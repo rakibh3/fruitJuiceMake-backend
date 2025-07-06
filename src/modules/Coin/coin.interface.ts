@@ -10,3 +10,9 @@ export type TPurchaserSchema = {
   purchaser: Types.ObjectId
   creator: Types.ObjectId
 }
+
+export type TBuyCoin = {
+  amount: number
+  price: number
+  transactionId: string
+}

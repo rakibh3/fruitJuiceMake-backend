@@ -1,9 +1,17 @@
-import express from 'express'
 
-import { createPaymentIntent } from './stripe.controller'
+import express from 'express';
 
-const router = express.Router()
+import { validateRequest } from '@/middlewares/validateRequest';
 
-router.post('/create-payment-intent', createPaymentIntent)
+import { StripeController } from './stripe.controller';
+import { stripeValidationSchema } from './stripe.validation';
 
-export const PaymentRoute = router
+const router = express.Router();
+
+router.post(
+  '/create-payment-intent',
+  validateRequest(stripeValidationSchema),
+  StripeController.createPaymentIntent
+);
+
+export const PaymentRoute = router;

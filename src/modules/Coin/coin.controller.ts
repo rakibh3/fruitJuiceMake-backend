@@ -18,6 +18,19 @@ const getCoins = catchAsync(async (req, res) => {
   })
 })
 
+// Buy coins
+const buyCoin = catchAsync(async (req, res) => {
+  const { id: userId } = req.user
+  const result = await CoinService.buyCoin(userId, req.body)
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Coins purchased successfully',
+    data: result,
+  })
+})
+
 // Transfer coins when a user views a recipe
 const viewRecipeAndTransferCoins = catchAsync(async (req, res) => {
   const { id: userId } = req.user
@@ -36,4 +49,5 @@ const viewRecipeAndTransferCoins = catchAsync(async (req, res) => {
 export const CoinController = {
   getCoins,
   viewRecipeAndTransferCoins,
+  buyCoin,
 }

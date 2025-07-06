@@ -1,26 +1,21 @@
-import { Request, Response } from 'express'
-import Stripe from 'stripe'
 
-import config from '../../config'
+import httpStatus from 'http-status';
 
-const stripe = new Stripe(config.stripe_secret_key as string)
+import { catchAsync } from '@/utils/catchAsync';
+import { sendResponse } from '@/utils/sendResponse';
 
-export const createPaymentIntent = async (req: Request, res: Response) => {
-  const { price } = req.body
-  const amount = parseInt(String(price))
+import { StripeService } from './stripe.service';
 
-  try {
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount: amount,
-      currency: 'usd',
-      payment_method_types: ['card'],
-    })
+const createPaymentIntent = catchAsync(async (req, res) => {
+  const result = await StripeService.createPaymentIntent(req.body);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Payment intent created successfully',
+    data: result,
+  });
+});
 
-    res.send({
-      clientSecret: paymentIntent.client_secret,
-    })
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    // console.error(error.message)
-  }
-}
+export const StripeController = {
+  createPaymentIntent,
+};
